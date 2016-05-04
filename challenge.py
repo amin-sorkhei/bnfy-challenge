@@ -22,18 +22,62 @@ def task2():
     print 'please take a look at the result.csv'
 
 
+
+
 def task3():
     '''
-    :return: Print the balance for the last three months
+    :return: Prints the balance for the last three months
     '''
 
     '''
-    PLEASE note that the most recent transaction date is considered as the basis
+    PLEASE note that
+    1-The most recent transaction date is considered as the time basis
+    2-Mean is taken over all the bank accounts
     '''
+
     transactions = pd.read_csv('account.csv', names=['date', 'balance'], usecols=[3, 4], skiprows=1)
     transactions['balance'] = transactions['balance'].astype(int)
     transactions['date'] = pd.to_datetime(transactions['date'])
 
     base_time = pd.to_datetime(transactions['date'].max()) - DateOffset(months=3)
     print transactions[transactions['date'] > base_time]['balance'].mean()
+
+
+def task3_b():
+    '''
+    :return: Print the balance for the last three months
+    '''
+
+    '''
+    PLEASE note that
+    1-The most recent transaction date is considered as the time basis
+    2-Mean is taken over all unique bank accounts
+    '''
+    transactions = pd.read_csv('account.csv', names=['account_no', 'date', 'balance'], usecols=[2, 3, 4], skiprows=1)
+    transactions['balance'] = transactions['balance'].astype(int)
+    transactions['date'] = pd.to_datetime(transactions['date'])
+
+    unique_accounts = transactions.groupby('account_no')
+    base_time = pd.to_datetime(transactions['date'].max()) - DateOffset(months=3)
+    print unique_accounts.apply(lambda x: x[x['date'] > base_time]['balance'].mean())
+
+
+def task3_c():
+    '''
+    :return: Print the balance for the last three months
+    '''
+
+    '''
+    PLEASE note that
+    1-The most recent transaction date for each bank account is considered as the time basis
+    2-Mean is taken over all unique bank accounts
+    '''
+    transactions = pd.read_csv('account.csv', names=['account_no', 'date', 'balance'], usecols=[2, 3, 4], skiprows=1)
+    transactions['balance'] = transactions['balance'].astype(int)
+    transactions['date'] = pd.to_datetime(transactions['date'])
+
+    unique_accounts = transactions.groupby('account_no')
+    base_time = pd.to_datetime(transactions['date'].max()) - DateOffset(months=3)
+    print unique_accounts.apply(lambda x: x[x['date'] > pd.to_datetime(x['date'].max()) - DateOffset(months=3)]\
+        ['balance'].mean())
 
