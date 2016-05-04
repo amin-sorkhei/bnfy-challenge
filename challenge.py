@@ -26,11 +26,7 @@ def task2():
 
 def task3():
     '''
-<<<<<<< HEAD
-    :return: Prints the balance for the last three months
-=======
     :return: Print the balance mean for the last three months
->>>>>>> c5fe9ef2fea630f4d7f399e9a9596b8d0d63e647
     '''
 
     '''
