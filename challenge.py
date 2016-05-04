@@ -24,7 +24,7 @@ def task2():
 
 def task3():
     '''
-    :return: Print the balance for the last three months
+    :return: Print the balance mean for the last three months
     '''
 
     '''
